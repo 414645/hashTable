@@ -9,13 +9,12 @@ using namespace std;
 
 //By Ryan Veith
 //
-//This is a formerly the test class for the linked lists project
-//I expanded t so it now works as intened using recursion
-//it can ADD, DELTETE, and PRINT studetns from the lined list
-//it also can AVERAGE the gpa of students on the list
+//This is the liked list project expanded for completing a hash table
 
 void addStudent(Node* &head, Node* current, Node* previous,
 		Student* newStudent);
+void addStudents(Node* &head, Node* current, Node* previous,
+		 Student* newStudent);
 void printStudent(Node* head, Node* current);
 void deleteStudent(Node* &head, Node* current, Node* previous,
 		   int identification);
@@ -241,6 +240,65 @@ void averageStudent(Node* head, Node* current, float value, int entrys) {
   else {
     if (entrys != 0) {
       cout << "Class Average: " << setprecision(3) << value/entrys << endl;
+    }
+  }
+}
+
+void addStudents(Node* &head, Node* current, Node* previous,
+		Student* newStudent) {
+  //cout << "addStudent Called" << endl;
+  //cout << endl;
+  //cout << endl;
+
+  //figure out if we add it here or move to next place in list
+  if (current != NULL) {
+    //cout << "current != NULL" << endl;
+
+    //if studentID > current Location in list studentID go to next
+    if (newStudent->getID() > current->getStudent()->getID()) {      
+      //cout << "studnetID > current spots studentID" << endl;
+      
+      if (current->getNext() != NULL) {
+	//cout << "goiing next " << endl;
+	
+	addStudent(head, current->getNext(), current, newStudent);
+      }
+      else {
+	//put it here next we are at end of list
+	//cout << "end of list" << endl;
+    
+	//add new one (end of list so next is void)
+        Node* newNode = new Node(newStudent);
+	//reset pointers
+	current->setNext(newNode);
+      }
+    }
+    //studentId is <= to current location so add it here
+    else {
+      //cout << "<= to current location so add it" << endl;
+      //This does not work specificly if it is the first one
+      //since it is added before head
+      //so set a new head
+      
+      Node* newNode = new Node(newStudent);
+      newNode->setNext(current);
+
+      if (previous == NULL) {
+	//cout << "new head" << endl;
+	head = newNode;
+      }
+      else {
+	previous->setNext(newNode);
+      }
+      
+    }
+  }
+  else {
+    Node* next = NULL;
+    if (previous == NULL) {
+      //cout << "replace head node" << endl;
+      //repaces head node
+      head = new Node(newStudent);
     }
   }
 }
