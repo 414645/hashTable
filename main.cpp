@@ -13,12 +13,12 @@ using namespace std;
 
 void addStudent(Node* &head, Node* current, Node* previous,
 		Student* newStudent);
+//newstudent should be unecessary
 void addStudents(Node* &head, Node* current, Node* previous,
 		 Student* newStudent);
 void printStudent(Node* head, Node* current);
 void deleteStudent(Node* &head, Node* current, Node* previous,
 		   int identification);
-void averageStudent(Node* head, Node* current, float value, int entrys);
 
 int main() {
   cout << "hello world" << endl;
@@ -27,8 +27,7 @@ int main() {
   Node* head = NULL;
   
   while (quit == false) {
-    //get user input
-    //ADD PRINT DELETE AVERAGE QUIT else HELP
+    //get user input: ADD PRINT DELETE AVERAGE QUIT else HELP
     cin.getline(input, 80);
     if (strcmp(input, "ADD") == 0) {
       char first[10];
@@ -52,15 +51,16 @@ int main() {
       printStudent(head, head);
     }
     if (strcmp(input, "DELETE") == 0) {
-      //ask what one and that gets sent too
+      //ask what one to delete
       cout << "Enter the Students ID number" << endl;
       int number;
       cin >> number;
       deleteStudent(head, head, NULL,
-		    number); //4 needs to be UI
+		    number);
     }
-    if (strcmp(input, "AVERAGE") == 0) {
-      averageStudent(head, head, 0, 0);
+    if (strcmp(input, "ADDS") == 0) {
+      cout << "add multiple" << endl;
+      //addStudents(head, head, 0, 0);
     }
     if (strcmp(input, "QUIT") == 0) {
       quit = true;
@@ -69,143 +69,87 @@ int main() {
   }
 }
 
-
-
-//needs recursion so two adds one here and then one for recursion
-//sorts from least to greatest Id of were to put new student
+//adds a student to the liked list
 void addStudent(Node* &head, Node* current, Node* previous,
 		Student* newStudent) {
-  //cout << "addStudent Called" << endl;
-  //cout << endl;
-  //cout << endl;
-
   //figure out if we add it here or move to next place in list
   if (current != NULL) {
-    //cout << "current != NULL" << endl;
-
     //if studentID > current Location in list studentID go to next
-    if (newStudent->getID() > current->getStudent()->getID()) {      
-      //cout << "studnetID > current spots studentID" << endl;
-      
+    if (newStudent->getID() > current->getStudent()->getID()) {            
       if (current->getNext() != NULL) {
-	//cout << "goiing next " << endl;
-	
 	addStudent(head, current->getNext(), current, newStudent);
       }
       else {
-	//put it here next we are at end of list
-	//cout << "end of list" << endl;
-    
-	//add new one (end of list so next is void)
+	//put it here we are at end of list
         Node* newNode = new Node(newStudent);
-	//reset pointers
 	current->setNext(newNode);
       }
     }
     //studentId is <= to current location so add it here
     else {
-      //cout << "<= to current location so add it" << endl;
-      //This does not work specificly if it is the first one
-      //since it is added before head
-      //so set a new head
-      
       Node* newNode = new Node(newStudent);
       newNode->setNext(current);
-
       if (previous == NULL) {
-	//cout << "new head" << endl;
 	head = newNode;
       }
       else {
 	previous->setNext(newNode);
-      }
-      
+      }      
     }
   }
   else {
     Node* next = NULL;
     if (previous == NULL) {
-      //cout << "replace head node" << endl;
       //repaces head node
       head = new Node(newStudent);
     }
   }
 }
 
+//print will need updated with the hash
 void printStudent(Node* head, Node* current) {
-  //cout << "prining" << endl;
   //check if it is first thing in list
   if (current == head) {
     cout << "StudentList:" << endl;
   }
   //cout next student
   if (current != NULL) {
-    //cout << "next != NULL" << endl;
     cout << current->getStudent()->getFirst() << ", ";
     cout << current->getStudent()->getLast() << ", ";
     cout << current->getStudent()->getID() << ", ";
     cout << setprecision(3) << current->getStudent()->getGPA() << endl;
-    //dont forgetrecusion
+    //dont forget recusion
     printStudent(head, current->getNext());
-    //cout << "end" << endl;
   }
 }
 
-//this function gave me trouble while coding so it has alot of couts
+//delete a student with given ID from a linkedlist
 void deleteStudent(Node* &head, Node* current, Node* previous,
 		   int identification) {
-  //delete needs id
-  //this will be basically same as add but delete current
-  //and have previous go to current->getNext or void in last clase spot
-  //cout << "del" << endl;
-
   if (head->getStudent()->getID() == identification) {
     //deal with it now!
-    //since there was a seg fault when it was lower in the code
-
-    //if we  delete set 2nd to head then delete
     if (current->getNext() != NULL) {
-      //cout << "head to node" << endl;
-      //head = current->getNext();
-      //cout << "delete" << endl;
-      //current = head;
       Node* temporary = head;
       head = head->getNext();
-      //delete temporary;
-      //cout << "?" << endl;
-      //in this case current = head so this works
     }
     else {
-      //cout << "head to null" << endl;
       head = NULL;
     }
   }
   else {
     //it is not head!!!
-    
-    //figure out if we there is anything to even delete
     if (current != NULL) {
-      //is it the correct one
-      //cout is a visual check for NULL before seg fault
-      //cout << "!= NULL " <<current->getStudent() << endl;
-      
       //does this id match the one given to delete
       if (current->getStudent()->getID() == identification) {      
-	//delete it
-	//cout << "found a 4" << endl;
-	
 	//figure out how to delete it and do so
 	if (previous != NULL) {
-	  //cout << "pre != null" << endl;
 	  if (current->getNext() != NULL) {
-	    //cout << "found something to delte" << endl;
 	    previous->setNext(current->getNext());
 	    current = NULL;
 	    delete current;
 	  }
 	  else {
 	    //a special case that was giving me trouble
-	    //cout << "deleting last" << endl;
 	    previous->setNext(NULL);
 	    current = NULL;
 	    delete current;
@@ -215,31 +159,11 @@ void deleteStudent(Node* &head, Node* current, Node* previous,
       }
     }
     //go next
-    //cout << "go next??? " << endl;
     if (current != NULL) {
       if (current->getNext()) {
 	//current + current->getnext() should be non null,
-	//cout << "current->getNext() != null" << endl;
 	deleteStudent(head, current->getNext(), current, identification);
-	//cout << "done" << endl;
       }
-    }
-    //cout << "did not breack" << endl;
-  }
-}
-
-void averageStudent(Node* head, Node* current, float value, int entrys) {
-  //cout << "average" << endl;
-  //next student
-  if (current != NULL) {
-    value = value + current->getStudent()->getGPA();
-    entrys++;
-    averageStudent(head, current->getNext(), value, entrys);
-  }
-  //if current = null cout average since we are done
-  else {
-    if (entrys != 0) {
-      cout << "Class Average: " << setprecision(3) << value/entrys << endl;
     }
   }
 }
