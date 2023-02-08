@@ -15,7 +15,7 @@ void addStudent(Node* &head, Node* current, Node* previous,
 		Student* newStudent);
 //newstudent should be unecessary
 void addStudents(Node* &head, Node* current, Node* previous,
-		 Student* newStudent);
+		 int number);
 void printStudent(Node* head, Node* current);
 void deleteStudent(Node* &head, Node* current, Node* previous,
 		   int identification);
@@ -60,7 +60,12 @@ int main() {
     }
     if (strcmp(input, "ADDS") == 0) {
       cout << "add multiple" << endl;
-      //addStudents(head, head, 0, 0);
+      cout << "Enter the number of Students you want to add" << endl;
+      int numbadd;
+      cin >> numbadd;
+      //for (int a = 0; a < numadd; a++) {
+      addStudents(head, head, NULL, 1); //1 -> a + 1
+      //}
     }
     if (strcmp(input, "QUIT") == 0) {
       quit = true;
@@ -168,59 +173,53 @@ void deleteStudent(Node* &head, Node* current, Node* previous,
   }
 }
 
-void addStudents(Node* &head, Node* current, Node* previous,
-		Student* newStudent) {
-  //cout << "addStudent Called" << endl;
-  //cout << endl;
-  //cout << endl;
+void addStudents(Node* &head, Node* current, Node* previous, int number) {
+  //first create a new student randomly
+  char first[10];
+  char last[10];
+  int ID;
+  float GPA;
+  //pull a name
+  
+  //pull another
 
-  //figure out if we add it here or move to next place in list
+  //random 6 digit num/ increment it
+  //ID = rand()%999999;
+  ID = number;
+  //random 1-4 decimal
+  GPA = rand()%40000/100;
+  //add student
+  Student* newStudent = new Student(first, last, ID , GPA);
+  
+  //then figure out what to do with them
+    //figure out if we add it here or move to next place in list
   if (current != NULL) {
-    //cout << "current != NULL" << endl;
-
     //if studentID > current Location in list studentID go to next
-    if (newStudent->getID() > current->getStudent()->getID()) {      
-      //cout << "studnetID > current spots studentID" << endl;
-      
+    if (newStudent->getID() > current->getStudent()->getID()) {            
       if (current->getNext() != NULL) {
-	//cout << "goiing next " << endl;
-	
 	addStudent(head, current->getNext(), current, newStudent);
       }
       else {
-	//put it here next we are at end of list
-	//cout << "end of list" << endl;
-    
-	//add new one (end of list so next is void)
+	//put it here we are at end of list
         Node* newNode = new Node(newStudent);
-	//reset pointers
 	current->setNext(newNode);
       }
     }
     //studentId is <= to current location so add it here
     else {
-      //cout << "<= to current location so add it" << endl;
-      //This does not work specificly if it is the first one
-      //since it is added before head
-      //so set a new head
-      
       Node* newNode = new Node(newStudent);
       newNode->setNext(current);
-
       if (previous == NULL) {
-	//cout << "new head" << endl;
 	head = newNode;
       }
       else {
 	previous->setNext(newNode);
-      }
-      
+      }      
     }
   }
   else {
     Node* next = NULL;
     if (previous == NULL) {
-      //cout << "replace head node" << endl;
       //repaces head node
       head = new Node(newStudent);
     }
