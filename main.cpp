@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstring>
 
 #include "student.h"
 #include "node.h"
@@ -180,9 +181,9 @@ void addStudents(Node* &head, Node* current, Node* previous, int number) {
   int ID;
   float GPA;
   //pull a name
-  
+  strcpy(first, "ryan");
   //pull another
-
+  strcpy(last, "veith");
   //random 6 digit num/ increment it
   //ID = rand()%999999;
   ID = number;
