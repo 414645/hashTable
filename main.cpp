@@ -17,6 +17,7 @@ void addStudent(Node* &head, Node* current, Node* previous,
 void printStudent(Node* head, Node* current);
 void deleteStudent(Node* &head, Node* current, Node* previous,
 		   int identification);
+void rehash(Node* *&hashtable, int &size);
 
 int main() {
   cout << "hello world" << endl;
@@ -58,6 +59,9 @@ int main() {
 
       //add student to correct spot
       //no rehash right now
+      if (ID == 1 ) {
+	rehash(hashtable, size);
+      }
       
       addStudent(hashtable[newStudent->getID()%size],
 		 hashtable[newStudent->getID()%size], NULL, newStudent); 
@@ -95,7 +99,8 @@ int main() {
     if (strcmp(input, "PRINT") == 0) {
       //go though every linked list in the hastable
       for(int a = 0; a < size; a++) {
-       printStudent(hashtable[a],hashtable[a]);
+	cout << "  :" << a << endl;
+	  printStudent(hashtable[a],hashtable[a]);
       }
     }
     if (strcmp(input, "DELETE") == 0) {
@@ -211,4 +216,35 @@ void deleteStudent(Node* &head, Node* current, Node* previous,
       }
     }
   }
+}
+
+void rehash(Node* *&hashtable, int & size) {
+  cout << "rehash" << endl;
+  size = 2 * size;
+  cout << size << endl;
+  Node* temphash[size];  
+  for (int a = 0; a < size; a++) {
+    temphash[a] = NULL;
+  }
+  
+  for (int a = 0; a < size / 2; a++) {
+    Node* current = hashtable[a];
+    while (current != NULL) {
+      //move current->getStudent based on
+      //current->getStudent->getID
+      cout << a << ": " << current->getStudent()->getID();
+      addStudent(hashtable[current->getStudent()->getID()%size],
+		 hashtable[current->getStudent()->getID()%size],
+		 NULL, current->getStudent());
+
+      //itterate
+      current = current->getNext();
+    }
+  }
+    
+    
+  //call print if bugged?
+  hashtable = temphash;
+
+  //there is no deleting of last function
 }
