@@ -25,7 +25,15 @@ int main() {
   cout << "hello world" << endl;
   bool quit = false;
   char input[80];
-  Node* head = NULL;
+
+  //create first hashtable
+  int size = 100;
+  Node* hashtable[size];
+  for (int a = 0; a < size; a++) {
+    hashtable[a] = NULL;
+  }
+  
+  //Node* head = NULL;
   
   while (quit == false) {
     //get user input: ADD PRINT DELETE AVERAGE QUIT else HELP
@@ -46,18 +54,29 @@ int main() {
       cin >> GPA;
       //add student
       Student* newStudent = new Student(first, last, ID , GPA);
-      addStudent(head, head, NULL, newStudent);
+      
+      //find where student goes
+      //cout << newStudent->getID()%size;
+
+      //add student to correct spot
+      //no rehash right now
+      addStudent(hashtable[newStudent->getID()%size],
+	hashtable[newStudent->getID()%size], NULL, newStudent);
+      
     }
     if (strcmp(input, "PRINT") == 0) {
-      printStudent(head, head);
+      //go though every linked list in the hastable
+      for(int a = 0; a < size; a++) {
+       printStudent(hashtable[a],hashtable[a]);
+      }
     }
     if (strcmp(input, "DELETE") == 0) {
       //ask what one to delete
       cout << "Enter the Students ID number" << endl;
       int number;
       cin >> number;
-      deleteStudent(head, head, NULL,
-		    number);
+      deleteStudent(hashtable[number%size],
+		    hashtable[number%size], NULL, number);
     }
     if (strcmp(input, "ADDS") == 0) {
       cout << "add multiple" << endl;
@@ -65,7 +84,7 @@ int main() {
       int numbadd;
       cin >> numbadd;
       //for (int a = 0; a < numadd; a++) {
-      addStudents(head, head, NULL, 1); //1 -> a + 1
+      //addStudents(head, head, NULL, 1); //1 -> a + 1
       //}
     }
     if (strcmp(input, "QUIT") == 0) {
@@ -116,7 +135,8 @@ void addStudent(Node* &head, Node* current, Node* previous,
 void printStudent(Node* head, Node* current) {
   //check if it is first thing in list
   if (current == head) {
-    cout << "StudentList:" << endl;
+    //dont want a cout here since call this multiple times
+    //cout << "StudentList:" << endl;
   }
   //cout next student
   if (current != NULL) {
