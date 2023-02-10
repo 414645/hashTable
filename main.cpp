@@ -14,9 +14,6 @@ using namespace std;
 
 void addStudent(Node* &head, Node* current, Node* previous,
 		Student* newStudent);
-//newstudent should be unecessary
-void addStudents(Node* &head, Node* current, Node* previous,
-		 int number);
 void printStudent(Node* head, Node* current);
 void deleteStudent(Node* &head, Node* current, Node* previous,
 		   int identification);
@@ -28,7 +25,8 @@ int main() {
 
   //create first hashtable
   int size = 100;
-  Node* hashtable[size];
+  Node* temphash[size];
+  Node* *hashtable = temphash;
   for (int a = 0; a < size; a++) {
     hashtable[a] = NULL;
   }
@@ -60,9 +58,39 @@ int main() {
 
       //add student to correct spot
       //no rehash right now
-      addStudent(hashtable[newStudent->getID()%size],
-	hashtable[newStudent->getID()%size], NULL, newStudent);
       
+      addStudent(hashtable[newStudent->getID()%size],
+		 hashtable[newStudent->getID()%size], NULL, newStudent); 
+    }
+    if (strcmp(input, "ADDS") == 0) {
+      cout << "add multiple" << endl;
+      cout << "Enter the number of Students you want to add" << endl;
+      int numadd;
+      cin >> numadd;
+      for (int a = 0; a < numadd; a++) {
+	char first[10];
+	char last[10];
+	int ID;
+	float GPA;
+	//student info
+	//pull a name
+	strcpy(first, "ryan");
+	//pull another
+	strcpy(last, "veith");
+	//random 6 digit num/ increment it
+	//ID = rand()%999999;
+	ID = 1;
+	//random 1-4 decimal
+	GPA = rand()%40000/100;
+	//add student
+	
+	Student* newStudent = new Student(first, last, ID , GPA);
+	
+        //add student to correct spot
+	//no rehash right now
+	addStudent(hashtable[newStudent->getID()%size],
+		   hashtable[newStudent->getID()%size], NULL, newStudent); 
+      }
     }
     if (strcmp(input, "PRINT") == 0) {
       //go though every linked list in the hastable
@@ -77,15 +105,6 @@ int main() {
       cin >> number;
       deleteStudent(hashtable[number%size],
 		    hashtable[number%size], NULL, number);
-    }
-    if (strcmp(input, "ADDS") == 0) {
-      cout << "add multiple" << endl;
-      cout << "Enter the number of Students you want to add" << endl;
-      int numbadd;
-      cin >> numbadd;
-      //for (int a = 0; a < numadd; a++) {
-      //addStudents(head, head, NULL, 1); //1 -> a + 1
-      //}
     }
     if (strcmp(input, "QUIT") == 0) {
       quit = true;
@@ -190,59 +209,6 @@ void deleteStudent(Node* &head, Node* current, Node* previous,
 	//current + current->getnext() should be non null,
 	deleteStudent(head, current->getNext(), current, identification);
       }
-    }
-  }
-}
-
-void addStudents(Node* &head, Node* current, Node* previous, int number) {
-  //first create a new student randomly
-  char first[10];
-  char last[10];
-  int ID;
-  float GPA;
-  //pull a name
-  strcpy(first, "ryan");
-  //pull another
-  strcpy(last, "veith");
-  //random 6 digit num/ increment it
-  //ID = rand()%999999;
-  ID = number;
-  //random 1-4 decimal
-  GPA = rand()%40000/100;
-  //add student
-  Student* newStudent = new Student(first, last, ID , GPA);
-  
-  //then figure out what to do with them
-    //figure out if we add it here or move to next place in list
-  if (current != NULL) {
-    //if studentID > current Location in list studentID go to next
-    if (newStudent->getID() > current->getStudent()->getID()) {            
-      if (current->getNext() != NULL) {
-	addStudent(head, current->getNext(), current, newStudent);
-      }
-      else {
-	//put it here we are at end of list
-        Node* newNode = new Node(newStudent);
-	current->setNext(newNode);
-      }
-    }
-    //studentId is <= to current location so add it here
-    else {
-      Node* newNode = new Node(newStudent);
-      newNode->setNext(current);
-      if (previous == NULL) {
-	head = newNode;
-      }
-      else {
-	previous->setNext(newNode);
-      }      
-    }
-  }
-  else {
-    Node* next = NULL;
-    if (previous == NULL) {
-      //repaces head node
-      head = new Node(newStudent);
     }
   }
 }
