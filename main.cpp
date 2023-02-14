@@ -100,7 +100,8 @@ int main() {
       //go though every linked list in the hastable
       for(int a = 0; a < size; a++) {
 	cout << "  :" << a << endl;
-	  printStudent(hashtable[a],hashtable[a]);
+	printStudent(hashtable[a],hashtable[a]);
+	cout << "___" << endl;
       }
     }
     if (strcmp(input, "DELETE") == 0) {
@@ -164,6 +165,7 @@ void printStudent(Node* head, Node* current) {
   }
   //cout next student
   if (current != NULL) {
+    cout << "current: " << current << endl;
     cout << current->getStudent()->getFirst() << ", ";
     cout << current->getStudent()->getLast() << ", ";
     cout << current->getStudent()->getID() << ", ";
@@ -218,13 +220,24 @@ void deleteStudent(Node* &head, Node* current, Node* previous,
   }
 }
 
-void rehash(Node* *&hashtable, int & size) {
-  cout << "rehash" << endl;
+void rehash(Node* *&hashtable, int &size) {
+  bool bugtest = true;
+  if (bugtest == true) {
+    cout << "rehash" << endl;
+  }
   size = 2 * size;
-  cout << size << endl;
-  Node* temphash[size];  
+  if (bugtest == true) {
+    cout << size << endl;
+  }
+  Node** temphash = new Node*[size];  
   for (int a = 0; a < size; a++) {
     temphash[a] = NULL;
+    if (bugtest == true) {
+      cout << "  :temphash[" << a << "]= " << temphash[a] << endl;
+    }
+  }
+  if (bugtest == true) {
+    cout << "cool, size:" << size << endl;
   }
   
   for (int a = 0; a < size / 2; a++) {
@@ -241,10 +254,24 @@ void rehash(Node* *&hashtable, int & size) {
       current = current->getNext();
     }
   }
+
+  if (bugtest == true) {
+    cout << "temp" << endl;
+    for(int a = 0; a < size; a++) {
+      cout << "  :" << a << endl;
+      printStudent(temphash[a],temphash[a]);
+    }
+  }
     
-    
-  //call print if bugged?
   hashtable = temphash;
 
+  if (bugtest == true) {
+    cout << "hash" << endl;
+    for(int a = 0; a < size; a++) {
+      cout << "  :" << a << endl;
+      printStudent(hashtable[a],hashtable[a]);
+    }
+  }
+  
   //there is no deleting of last function
 }
