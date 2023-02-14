@@ -101,7 +101,6 @@ int main() {
       for(int a = 0; a < size; a++) {
 	cout << "  :" << a << endl;
 	printStudent(hashtable[a],hashtable[a]);
-	cout << "___" << endl;
       }
     }
     if (strcmp(input, "DELETE") == 0) {
@@ -122,21 +121,35 @@ int main() {
 //adds a student to the liked list
 void addStudent(Node* &head, Node* current, Node* previous,
 		Student* newStudent) {
+  cout << "adding student" << endl;
+  cout << current << endl;
+  cout << newStudetn << endl;
   //figure out if we add it here or move to next place in list
   if (current != NULL) {
+    cout << "1:" << endl;
+    cout << newStudent->getID() << endl;
+    cout << current << endl;
+    cout << current->getStudent() << endl;
+    cout << current->getStudent()->getID() << endl;
+    cout << ":11" << endl;
     //if studentID > current Location in list studentID go to next
     if (newStudent->getID() > current->getStudent()->getID()) {            
+      cout << "2" << endl;
       if (current->getNext() != NULL) {
+	cout << "3" << endl;
 	addStudent(head, current->getNext(), current, newStudent);
       }
       else {
 	//put it here we are at end of list
+	cout << "added!" << endl;
         Node* newNode = new Node(newStudent);
 	current->setNext(newNode);
       }
+      cout << "here" << endl;
     }
     //studentId is <= to current location so add it here
     else {
+      cout << "ADDED" << endl;
       Node* newNode = new Node(newStudent);
       newNode->setNext(current);
       if (previous == NULL) {
@@ -165,7 +178,7 @@ void printStudent(Node* head, Node* current) {
   }
   //cout next student
   if (current != NULL) {
-    cout << "current: " << current << endl;
+    //cout << "current: " << current << endl;
     cout << current->getStudent()->getFirst() << ", ";
     cout << current->getStudent()->getLast() << ", ";
     cout << current->getStudent()->getID() << ", ";
@@ -221,6 +234,7 @@ void deleteStudent(Node* &head, Node* current, Node* previous,
 }
 
 void rehash(Node* *&hashtable, int &size) {
+  //bugtest manages cout since I had some trouble
   bool bugtest = true;
   if (bugtest == true) {
     cout << "rehash" << endl;
@@ -241,18 +255,37 @@ void rehash(Node* *&hashtable, int &size) {
   }
   
   for (int a = 0; a < size / 2; a++) {
+    if (bugtest == true) {
+      cout << "for lp "<< a << endl;
+    }
+
     Node* current = hashtable[a];
+
+    if (bugtest == true) {
+      cout << "hash[a]: " << hashtable[a] << endl;
+    }
+
     while (current != NULL) {
+      cout << "hello" << endl;;
       //move current->getStudent based on
       //current->getStudent->getID
-      cout << a << ": " << current->getStudent()->getID();
+      if (bugtest == true) {
+	cout << a << ": " << current->getStudent()->getID();
+	
+	cout << current->getStudent()->getID()%size << endl;
+
+	cout << "crash?" << endl;
+      }
       addStudent(hashtable[current->getStudent()->getID()%size],
 		 hashtable[current->getStudent()->getID()%size],
 		 NULL, current->getStudent());
 
       //itterate
+      
+      cout << "no crash" << endl; 
       current = current->getNext();
     }
+    cout << "hiiiiiii" << endl;
   }
 
   if (bugtest == true) {
