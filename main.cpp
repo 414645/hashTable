@@ -269,7 +269,8 @@ void rehash(Node* *&hashtable, int &size) {
     }
 
     while (current != NULL) {
-      cout << "hello" << endl;;
+      cout << "hello" << endl;
+      cout << "current>next: " << current->getNext() << endl;
       //move current->getStudent based on
       //current->getStudent->getID
       if (bugtest == true) {
