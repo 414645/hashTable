@@ -121,17 +121,20 @@ int main() {
 //adds a student to the liked list
 void addStudent(Node* &head, Node* current, Node* previous,
 		Student* newStudent) {
-  cout << "adding student" << endl;
-  cout << current << endl;
-  cout << newStudent << endl;
+  //cout << "adding student" << endl;
+  //cout << current << endl;
+  //cout << newStudent << endl;
   //figure out if we add it here or move to next place in list
   if (current != NULL) {
+    /*
     cout << "1:" << endl;
     cout << newStudent->getID() << endl;
     cout << current << endl;
     cout << current->getStudent() << endl;
     cout << current->getStudent()->getID() << endl;
     cout << ":11" << endl;
+    */
+    
     //if studentID > current Location in list studentID go to next
     if (newStudent->getID() > current->getStudent()->getID()) {            
       cout << "2" << endl;
@@ -298,13 +301,13 @@ void rehash(Node* *&hashtable, int &size) {
 
 //itterate
       
-      cout << "no crash" << endl;
+      //cout << "no crash" << endl;
       Node* temp = current;
       temp->setNext(NULL);
       
       current = current->getNext();
     }
-    cout << "hiiiiiii" << endl;
+    //cout << "hiiiiiii" << endl;
   }
 
   if (bugtest == true) {
