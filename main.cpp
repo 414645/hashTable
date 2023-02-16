@@ -123,7 +123,7 @@ void addStudent(Node* &head, Node* current, Node* previous,
 		Student* newStudent) {
   cout << "adding student" << endl;
   cout << current << endl;
-  cout << newStudetn << endl;
+  cout << newStudent << endl;
   //figure out if we add it here or move to next place in list
   if (current != NULL) {
     cout << "1:" << endl;
@@ -235,7 +235,7 @@ void deleteStudent(Node* &head, Node* current, Node* previous,
 
 void rehash(Node* *&hashtable, int &size) {
   //bugtest manages cout since I had some trouble
-  bool bugtest = true;
+  bool bugtest = false;
   if (bugtest == true) {
     cout << "rehash" << endl;
   }
@@ -276,13 +276,32 @@ void rehash(Node* *&hashtable, int &size) {
 
 	cout << "crash?" << endl;
       }
-      addStudent(hashtable[current->getStudent()->getID()%size],
-		 hashtable[current->getStudent()->getID()%size],
-		 NULL, current->getStudent());
-
-      //itterate
       
-      cout << "no crash" << endl; 
+      /*
+	addStudent(hashtable[current->getStudent()->getID()%size],
+	hashtable[current->getStudent()->getID()%size],
+	NULL, current->getStudent());
+      */
+      Node* destination = temphash[current->getStudent()->getID()%size];
+      if (destination == NULL) {
+        destination = current;
+	cout << "null->thing" << endl;
+      }
+      else {
+	while (destination->getNext() != NULL) {
+	  destination = destination->getNext();
+        }
+	destination->setNext(current);
+      }
+    
+      
+
+//itterate
+      
+      cout << "no crash" << endl;
+      Node* temp = current;
+      temp->setNext(NULL);
+      
       current = current->getNext();
     }
     cout << "hiiiiiii" << endl;
