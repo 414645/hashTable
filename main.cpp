@@ -290,7 +290,7 @@ void rehash(Node* *&hashtable, int &size) {
 	cout << destination << endl;
 	cout << current << endl;
 
-	destination = current;
+	temphash[current->getStudent()->getID()%size] = current;
 
 	cout << "hash[" << current->getStudent()->getID()%size
 	     << "]"  << hashtable[current->getStudent()->getID()%size] << endl;
