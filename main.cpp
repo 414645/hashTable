@@ -238,7 +238,7 @@ void deleteStudent(Node* &head, Node* current, Node* previous,
 
 void rehash(Node* *&hashtable, int &size) {
   //bugtest manages cout since I had some trouble
-  bool bugtest = false;
+  bool bugtest = true;
   if (bugtest == true) {
     cout << "rehash" << endl;
   }
@@ -250,7 +250,7 @@ void rehash(Node* *&hashtable, int &size) {
   for (int a = 0; a < size; a++) {
     temphash[a] = NULL;
     if (bugtest == true) {
-      cout << "  :temphash[" << a << "]= " << temphash[a] << endl;
+      //cout << "  :temphash[" << a << "]= " << temphash[a] << endl;
     }
   }
   if (bugtest == true) {
@@ -277,7 +277,7 @@ void rehash(Node* *&hashtable, int &size) {
 	
 	cout << current->getStudent()->getID()%size << endl;
 
-	cout << "crash?" << endl;
+	//cout << "crash?" << endl;
       }
       
       /*
@@ -287,7 +287,13 @@ void rehash(Node* *&hashtable, int &size) {
       */
       Node* destination = temphash[current->getStudent()->getID()%size];
       if (destination == NULL) {
-        destination = current;
+	cout << destination << endl;
+	cout << current << endl;
+
+	destination = current;
+
+	cout << "hash[" << current->getStudent()->getID()%size
+	     << "]"  << hashtable[current->getStudent()->getID()%size] << endl;
 	cout << "null->thing" << endl;
       }
       else {
@@ -296,10 +302,10 @@ void rehash(Node* *&hashtable, int &size) {
         }
 	destination->setNext(current);
       }
-    
       
-
-//itterate
+      
+      
+      //itterate
       
       //cout << "no crash" << endl;
       Node* temp = current;
