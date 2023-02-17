@@ -23,6 +23,7 @@ int main() {
   cout << "hello world" << endl;
   bool quit = false;
   char input[80];
+  int studentnumber = 1;
 
   //create first hashtable
   int size = 100;
@@ -79,7 +80,7 @@ int main() {
       //	 hashtable[newStudent->getID()%size], NULL, newStudent); 
     }
     if (strcmp(input, "ADDS") == 0) {
-      cout << "add multiple" << endl;
+      //cout << "add multiple" << endl;
       cout << "Enter the number of Students you want to add" << endl;
       int numadd;
       cin >> numadd;
@@ -95,17 +96,32 @@ int main() {
 	strcpy(last, "veith");
 	//random 6 digit num/ increment it
 	//ID = rand()%999999;
-	ID = 1;
+	ID = studentnumber;
+	studentnumber++;
 	//random 1-4 decimal
-	GPA = rand()%40000/100;
+	GPA = (float)(rand()%400)/100;
 	//add student
 	
 	Student* newStudent = new Student(first, last, ID , GPA);
 	
         //add student to correct spot
-	//no rehash right now
 	addStudent(hashtable[newStudent->getID()%size],
-		   hashtable[newStudent->getID()%size], NULL, newStudent); 
+		 hashtable[newStudent->getID()%size], NULL, newStudent); 
+
+	//this is the same code as above
+	//figure out if we need a rehash
+	//if we have 3 in same list rehash
+	if (hashtable[newStudent->getID()%size] != NULL) {
+	  if (hashtable[newStudent->getID()%size]->getNext() != NULL) {
+	    if (hashtable[newStudent->getID()%size]->getNext()->getNext()
+		!= NULL) {
+	      cout << "rehashing" << endl;
+	      rehash(hashtable, size);
+	    }
+	  }
+	}
+
+      
       }
     }
     if (strcmp(input, "PRINT") == 0) {
