@@ -314,9 +314,13 @@ void rehash(Node* *&hashtable, int &size) {
       
       //cout << "no crash" << endl;
       Node* temp = current;
-      temp->setNext(NULL);
       
       current = current->getNext();
+      if (bugtest == true) {
+	cout << "current: " << current << endl;
+      }
+      
+      temp->setNext(NULL);
     }
     //cout << "hiiiiiii" << endl;
   }
