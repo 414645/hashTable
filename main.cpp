@@ -57,14 +57,18 @@ int main() {
       //find where student goes
       //cout << newStudent->getID()%size;
 
+
+      addStudent(hashtable[newStudent->getID()%size],
+		 hashtable[newStudent->getID()%size], NULL, newStudent); 
+      
       //add student to correct spot
       //no rehash right now
       if (ID == 1 ) {
 	rehash(hashtable, size);
       }
       
-      addStudent(hashtable[newStudent->getID()%size],
-		 hashtable[newStudent->getID()%size], NULL, newStudent); 
+      //addStudent(hashtable[newStudent->getID()%size],
+      //	 hashtable[newStudent->getID()%size], NULL, newStudent); 
     }
     if (strcmp(input, "ADDS") == 0) {
       cout << "add multiple" << endl;
