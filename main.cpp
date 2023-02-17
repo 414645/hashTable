@@ -61,12 +61,20 @@ int main() {
       addStudent(hashtable[newStudent->getID()%size],
 		 hashtable[newStudent->getID()%size], NULL, newStudent); 
       
-      //add student to correct spot
-      //no rehash right now
-      if (ID == 1 ) {
-	rehash(hashtable, size);
+      //figure out if we need a rehash
+      //if we have 3 in same list rehash
+      if (hashtable[newStudent->getID()%size] != NULL) {
+	if (hashtable[newStudent->getID()%size]->getNext() != NULL) {
+	  if (hashtable[newStudent->getID()%size]->getNext()->getNext()
+	      != NULL) {
+	    cout << "rehashing" << endl;
+	    rehash(hashtable, size);
+	  }
+	}
       }
-      
+
+
+      //We are adding the student before rehasing since its an easier check
       //addStudent(hashtable[newStudent->getID()%size],
       //	 hashtable[newStudent->getID()%size], NULL, newStudent); 
     }
@@ -141,9 +149,7 @@ void addStudent(Node* &head, Node* current, Node* previous,
     
     //if studentID > current Location in list studentID go to next
     if (newStudent->getID() > current->getStudent()->getID()) {            
-      cout << "2" << endl;
       if (current->getNext() != NULL) {
-	cout << "3" << endl;
 	addStudent(head, current->getNext(), current, newStudent);
       }
       else {
@@ -152,7 +158,6 @@ void addStudent(Node* &head, Node* current, Node* previous,
         Node* newNode = new Node(newStudent);
 	current->setNext(newNode);
       }
-      cout << "here" << endl;
     }
     //studentId is <= to current location so add it here
     else {
