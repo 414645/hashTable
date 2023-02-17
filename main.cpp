@@ -148,7 +148,7 @@ void addStudent(Node* &head, Node* current, Node* previous,
       }
       else {
 	//put it here we are at end of list
-	cout << "added!" << endl;
+	//cout << "added!" << endl;
         Node* newNode = new Node(newStudent);
 	current->setNext(newNode);
       }
@@ -156,7 +156,7 @@ void addStudent(Node* &head, Node* current, Node* previous,
     }
     //studentId is <= to current location so add it here
     else {
-      cout << "ADDED" << endl;
+      //cout << "ADDED" << endl;
       Node* newNode = new Node(newStudent);
       newNode->setNext(current);
       if (previous == NULL) {
@@ -242,7 +242,7 @@ void deleteStudent(Node* &head, Node* current, Node* previous,
 
 void rehash(Node* *&hashtable, int &size) {
   //bugtest manages cout since I had some trouble
-  bool bugtest = true;
+  bool bugtest = false;
   if (bugtest == true) {
     cout << "rehash" << endl;
   }
@@ -273,8 +273,8 @@ void rehash(Node* *&hashtable, int &size) {
     }
 
     while (current != NULL) {
-      cout << "hello" << endl;
-      cout << "current>next: " << current->getNext() << endl;
+      //cout << "hello" << endl;
+      //cout << "current>next: " << current->getNext() << endl;
       //move current->getStudent based on
       //current->getStudent->getID
       if (bugtest == true) {
@@ -292,14 +292,18 @@ void rehash(Node* *&hashtable, int &size) {
       */
       Node* destination = temphash[current->getStudent()->getID()%size];
       if (destination == NULL) {
-	cout << destination << endl;
-	cout << current << endl;
-
+	if (bugtest == true) {
+	  cout << destination << endl;
+	  cout << current << endl;
+	}
+	
 	temphash[current->getStudent()->getID()%size] = current;
 
-	cout << "hash[" << current->getStudent()->getID()%size
-	     << "]"  << hashtable[current->getStudent()->getID()%size] << endl;
-	cout << "null->thing" << endl;
+	if (bugtest == true) {
+	  cout << "hash[" << current->getStudent()->getID()%size << "]"
+	       << hashtable[current->getStudent()->getID()%size] << endl;
+	  cout << "null->thing" << endl;
+	}
       }
       else {
 	while (destination->getNext() != NULL) {
