@@ -92,37 +92,31 @@ int main() {
 	int ID;
 	float GPA;
 	//student info
-	//pull a name
-	//ifstream ifs("first.txt", ifstream::in);
-	//while (ifs.good()) {
-	char name[10];
-	//ifstream ifs;
-	//getline (ifs, name);
-	//}
+	//i know this means you will only get pairs of names
+	//but I think it is funny so that why it is not two rand()s
+	int tempNum = rand()%10;
 
-	/*char line[50];
-	ifstream myfile("first.txt");
-	if (myfile.is_open) {
-	  while (getline (myfile,line)) {
-	    cout << line << endl;
+	//pull a name
+	ifstream myfile ("first.txt");
+	if (myfile.is_open()){
+	  for (int a = 0; a < tempNum; a++) {
+	    myfile >> first;
 	  }
 	}
-	*/
-
-	//ifs.close();
-
-	ifstream myfile ("first.txt");
-	char mystring[50];
-	if (myfile.is_open()){
-	  myfile >> mystring;
-	  myfile >> mystring;
-	  cout << mystring;
-	}
-	
-	
-	strcpy(first, name);
+	myfile.close();
+	//strcpy(first, );
 	//pull another
-	strcpy(last, "veith");
+
+	ifstream myFile ("last.txt");
+	if (myFile.is_open()){
+	  //cout << tempNum;
+	  for (int a = 0; a < tempNum; a++) {
+	    myFile >> last;
+	    //cout << last;
+	  }
+	}
+	myFile.close();
+	//strcpy(last, "veith");
 	//random 6 digit num/ increment it
 	//ID = rand()%999999;
 	ID = studentnumber;
