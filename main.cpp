@@ -1,6 +1,8 @@
 #include <iostream>
 #include <cstring>
 
+#include <fstream>
+
 #include "student.h"
 #include "node.h"
 //for set preceison
@@ -91,7 +93,34 @@ int main() {
 	float GPA;
 	//student info
 	//pull a name
-	strcpy(first, "ryan");
+	//ifstream ifs("first.txt", ifstream::in);
+	//while (ifs.good()) {
+	char name[10];
+	//ifstream ifs;
+	//getline (ifs, name);
+	//}
+
+	/*char line[50];
+	ifstream myfile("first.txt");
+	if (myfile.is_open) {
+	  while (getline (myfile,line)) {
+	    cout << line << endl;
+	  }
+	}
+	*/
+
+	//ifs.close();
+
+	ifstream myfile ("first.txt");
+	char mystring[50];
+	if (myfile.is_open()){
+	  myfile >> mystring;
+	  myfile >> mystring;
+	  cout << mystring;
+	}
+	
+	
+	strcpy(first, name);
 	//pull another
 	strcpy(last, "veith");
 	//random 6 digit num/ increment it
