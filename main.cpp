@@ -14,15 +14,22 @@ using namespace std;
 //
 //This is the liked list project expanded for completing a hash table
 
+//add a student to a linked list
 void addStudent(Node* &head, Node* current, Node* previous,
 		Student* newStudent);
+//print out a linked list
 void printStudent(Node* head, Node* current);
+//delete a student by id from a linked list
 void deleteStudent(Node* &head, Node* current, Node* previous,
 		   int identification);
+//rehash the hash table (double size)
 void rehash(Node* *&hashtable, int &size);
 
 int main() {
-  cout << "hello world" << endl;
+  cout << "This program is the same as student list," << endl;
+  cout << "but it  stores students in a hash table" << endl;
+  cout << "the AVERAGE command has been replaced with ADDS" << endl;
+  cout << "ADDS, adds multiple randomish students to the linked list" << endl;
   bool quit = false;
   char input[80];
   int studentnumber = 1;
@@ -38,7 +45,7 @@ int main() {
   //Node* head = NULL;
   
   while (quit == false) {
-    //get user input: ADD PRINT DELETE AVERAGE QUIT else HELP
+    //get user input: ADD PRINT DELETE AVERAGE QUIT (also ADDS)
     cin.getline(input, 80);
     if (strcmp(input, "ADD") == 0) {
       char first[10];
@@ -57,7 +64,7 @@ int main() {
       //add student
       Student* newStudent = new Student(first, last, ID , GPA);
       
-      //find where student goes
+      //find where student goes is
       //cout << newStudent->getID()%size;
 
 
@@ -123,15 +130,15 @@ int main() {
 	studentnumber++;
 	//random 1-4 decimal
 	GPA = (float)(rand()%400)/100;
+
 	//add student
-	
 	Student* newStudent = new Student(first, last, ID , GPA);
 	
         //add student to correct spot
 	addStudent(hashtable[newStudent->getID()%size],
 		 hashtable[newStudent->getID()%size], NULL, newStudent); 
 
-	//this is the same code as above
+	//this is the same code as above:
 	//figure out if we need a rehash
 	//if we have 3 in same list rehash
 	if (hashtable[newStudent->getID()%size] != NULL) {
@@ -159,6 +166,7 @@ int main() {
       cout << "Enter the Students ID number" << endl;
       int number;
       cin >> number;
+      //delete it from the correct index in hashtable
       deleteStudent(hashtable[number%size],
 		    hashtable[number%size], NULL, number);
     }
@@ -170,6 +178,9 @@ int main() {
 }
 
 //adds a student to the liked list
+//has a lot of comments because rehash was not working
+//so extra prints was helpful
+//this is just adding newStudent to a linked list (sorting by id)
 void addStudent(Node* &head, Node* current, Node* previous,
 		Student* newStudent) {
   //cout << "adding student" << endl;
@@ -220,7 +231,7 @@ void addStudent(Node* &head, Node* current, Node* previous,
   }
 }
 
-//print will need updated with the hash
+//print a linked list
 void printStudent(Node* head, Node* current) {
   //check if it is first thing in list
   if (current == head) {
@@ -284,17 +295,21 @@ void deleteStudent(Node* &head, Node* current, Node* previous,
   }
 }
 
+//rehashs hashtable to a new array twice the size
 void rehash(Node* *&hashtable, int &size) {
   //bugtest manages cout since I had some trouble
   bool bugtest = false;
+  //there were alot of problems so the if(butest) was toubleshooting
   if (bugtest == true) {
     cout << "rehash" << endl;
   }
+  //double size then create a new array
   size = 2 * size;
   if (bugtest == true) {
     cout << size << endl;
   }
-  Node** temphash = new Node*[size];  
+  Node** temphash = new Node*[size];
+  //set the new array to null
   for (int a = 0; a < size; a++) {
     temphash[a] = NULL;
     if (bugtest == true) {
@@ -310,6 +325,8 @@ void rehash(Node* *&hashtable, int &size) {
       cout << "for lp "<< a << endl;
     }
 
+    //going though the old hashtable
+    //move values to new one
     Node* current = hashtable[a];
 
     if (bugtest == true) {
@@ -340,7 +357,8 @@ void rehash(Node* *&hashtable, int &size) {
 	  cout << destination << endl;
 	  cout << current << endl;
 	}
-	
+
+	//if list is null it is head
 	temphash[current->getStudent()->getID()%size] = current;
 
 	if (bugtest == true) {
@@ -350,6 +368,7 @@ void rehash(Node* *&hashtable, int &size) {
 	}
       }
       else {
+	//add them to the end of the list
 	while (destination->getNext() != NULL) {
 	  destination = destination->getNext();
         }
@@ -358,7 +377,7 @@ void rehash(Node* *&hashtable, int &size) {
       
       
       
-      //itterate
+      //itterate so you get everything in the first hash not just the head
       
       //cout << "no crash" << endl;
       Node* temp = current;
@@ -380,7 +399,8 @@ void rehash(Node* *&hashtable, int &size) {
       printStudent(temphash[a],temphash[a]);
     }
   }
-    
+
+  //make our pointer point to our new hashtable
   hashtable = temphash;
 
   if (bugtest == true) {
@@ -391,5 +411,5 @@ void rehash(Node* *&hashtable, int &size) {
     }
   }
   
-  //there is no deleting of last function
+  //there is no deleting of last function since things are moved
 }
